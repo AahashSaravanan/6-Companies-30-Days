@@ -1,0 +1,27 @@
+class Solution:
+    def isRectangleCover(self, rectangles: List[List[int]]) -> bool:
+        a=[]
+        b=[]
+        for a1,b1,a2,b2 in rectangles:
+            a.append(a1)
+            a.append(a2)
+
+            b.append(b1)
+            b.append(b2)
+        aup={x:i for i,x in enumerate(sorted(set(a)))}
+        bup={y:i for i,y in enumerate(sorted(set(b)))}
+        N=len(aup)-1
+        M=len(bup)-1
+
+        g=[[0]* M for _ in range(N)]
+
+        for a1,b1,a2,b2 in rectangles:
+            for ca in range(aup[a1],aup[a2]):
+                for cb in range(bup[b1],bup[b2]):
+                    g[ca][cb]+=1
+
+        for row in g:
+            for cell in row:
+                if cell!=1:
+                    return False
+        return True
